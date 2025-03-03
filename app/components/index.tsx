@@ -219,13 +219,14 @@ const Main: FC<IMainProps> = () => {
   // init
   useEffect(() => {
     if (!hasSetAppConfig) {
+      console.log('hasSetAppConfig1')
       setAppUnavailable(true)
       return
     }
     (async () => {
       try {
         const [conversationData, appParams] = await Promise.all([fetchConversations(), fetchAppParams()])
-
+        console.log('conversationData:', conversationData)
         // handle current conversation id
         const { data: conversations, error } = conversationData as { data: ConversationItem[]; error: string }
         if (error) {
@@ -260,10 +261,13 @@ const Main: FC<IMainProps> = () => {
         setInited(true)
       }
       catch (e: any) {
+        console.log('e:', e)
         if (e.status === 404) {
+          console.log('hasSetAppConfig2')
           setAppUnavailable(true)
         }
         else {
+          console.log('hasSetAppConfig3')
           setIsUnknownReason(true)
           setAppUnavailable(true)
         }
